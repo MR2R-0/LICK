@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LICK | Lavonne Ice Cream Kitchen</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+      body {
+        font-family: 'Outfit', sans-serif;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Outfit', sans-serif; 
+      }
+      .font-serif {
+        font-family: 'Playfair Display', serif;
+      }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #E88B8C; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #8B4049; 
+      }
+
+      /* Scroll Animations */
+      .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        will-change: opacity, transform;
+      }
+      .animate-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Variations */
+      .animate-on-scroll.slide-left {
+        transform: translateX(-50px);
+      }
+      .animate-on-scroll.slide-left.is-visible {
+        transform: translateX(0);
+      }
+
+      .animate-on-scroll.slide-right {
+        transform: translateX(50px);
+      }
+      .animate-on-scroll.slide-right.is-visible {
+        transform: translateX(0);
+      }
+
+      .animate-on-scroll.zoom-in {
+        transform: scale(0.95);
+      }
+      .animate-on-scroll.zoom-in.is-visible {
+        transform: scale(1);
+      }
+
+      /* Animations */
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .animate-gradient {
+        animation: gradient 3s ease infinite;
+        background-size: 200% auto;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      /* Custom Background Patterns */
+      .bg-pattern-tile {
+        background-color: #F4C4C4;
+        background-image: 
+          linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+
+      .bg-pattern-sprinkles {
+        background-color: #8B4049;
+        background-image: radial-gradient(#6B9B9E 15%, transparent 16%),
+        radial-gradient(#E88B8C 15%, transparent 16%),
+        radial-gradient(#D17B4A 15%, transparent 16%),
+        radial-gradient(#FBE7C6 15%, transparent 16%);
+        background-size: 60px 60px;
+        background-position: 0 0, 30px 30px, 15px 45px, 45px 15px;
+      }
+
+      /* Utility for active tabs */
+      .tab-active {
+        transform: scale(1.05);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-stone-50 text-slate-900 antialiased selection:bg-[#E88B8C] selection:text-white">
+    
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-6">
+      <div class="container mx-auto px-6 flex justify-between items-center">
+        <!-- Logo -->
+        <a href="#" class="flex flex-col items-center leading-none group">
+          <img src="Images/logo.jpg" alt="LICK Logo" class="h-10 md:h-12 w-auto object-contain mb-1 hover:brightness-110 transition-all" />
+          <span class="text-[0.6rem] font-medium tracking-widest text-white opacity-80 group-hover:opacity-100 group-hover:tracking-[0.15em] transition-all duration-300 uppercase">Lavonne Ice Cream Kitchen</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex space-x-8">
+          <a href="#experience" class="relative text-white font-medium text-sm tracking-wide transition-colors uppercase group overflow-hidden">
+            <span class="relative z-10 group-hover:text-[#FBE7C6] transition-colors">Experience</span>
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#E88B8C] to-[#D17B4A] transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#flavors" class="relative text-white font-medium text-sm tracking-wide transition-colors uppercase group overflow-hidden">
+            <span class="relative z-10 group-hover:text-[#FBE7C6] transition-colors">Flavors</span>
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#E88B8C] to-[#D17B4A] transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#about" class="relative text-white font-medium text-sm tracking-wide transition-colors uppercase group overflow-hidden">
+            <span class="relative z-10 group-hover:text-[#FBE7C6] transition-colors">About</span>
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#E88B8C] to-[#D17B4A] transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#social" class="relative text-white font-medium text-sm tracking-wide transition-colors uppercase group overflow-hidden">
+            <span class="relative z-10 group-hover:text-[#FBE7C6] transition-colors">Social</span>
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#E88B8C] to-[#D17B4A] transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="#locations" class="relative text-white font-medium text-sm tracking-wide transition-colors uppercase group overflow-hidden">
+            <span class="relative z-10 group-hover:text-[#FBE7C6] transition-colors">Locations</span>
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#E88B8C] to-[#D17B4A] transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden text-white hover:text-[#E88B8C] transition-colors">
+          <i data-lucide="menu" id="menu-icon"></i>
+          <i data-lucide="x" id="close-icon" class="hidden"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Overlay -->
+      <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-[#8B4049] border-t border-white/10 flex flex-col p-6 shadow-xl md:hidden">
+        <a href="#experience" class="mobile-link text-white py-3 text-lg font-medium border-b border-white/5 hover:text-[#E88B8C] hover:pl-2 transition-all">Experience</a>
+        <a href="#flavors" class="mobile-link text-white py-3 text-lg font-medium border-b border-white/5 hover:text-[#E88B8C] hover:pl-2 transition-all">Flavors</a>
+        <a href="#about" class="mobile-link text-white py-3 text-lg font-medium border-b border-white/5 hover:text-[#E88B8C] hover:pl-2 transition-all">About</a>
+        <a href="#social" class="mobile-link text-white py-3 text-lg font-medium border-b border-white/5 hover:text-[#E88B8C] hover:pl-2 transition-all">Social</a>
+        <a href="#locations" class="mobile-link text-white py-3 text-lg font-medium hover:text-[#E88B8C] hover:pl-2 transition-all">Locations</a>
+      </div>
+    </nav>
+
+    <main>
+      <!-- Hero Section -->
+      <section id="hero" class="relative h-screen w-full overflow-hidden">
+        <!-- Replaced background image with provided file, using raw string format for compatibility -->
+        <div id="hero-bg" class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('Images/LICK, through the lens - all about sleek lines and soft serves! The space that is designed to te.jpg'); transition: transform 0.1s linear;">
+          <!-- Overlay -->
+          <div class="absolute inset-0 bg-gradient-to-b from-[#8B4049]/50 via-[#8B4049]/30 to-[#1A1A1A]/90 mix-blend-multiply"></div>
+          <div class="absolute inset-0 opacity-40 bg-gradient-to-tr from-[#E88B8C]/40 via-transparent to-[#6B9B9E]/40 mix-blend-overlay"></div>
+        </div>
+
+        <div class="relative h-full container mx-auto px-6 flex flex-col justify-center items-center text-center text-white z-10 pt-20">
+          <div style="animation: fadeInUp 1s ease-out forwards; opacity: 0;">
+            <!-- Updated pill opacity to match screenshot -->
+            <span class="inline-block py-1 px-4 border border-[#E88B8C]/50 rounded-full text-xs font-bold tracking-[0.2em] uppercase mb-6 bg-[#8B4049]/90 backdrop-blur-md text-[#FBE7C6] shadow-lg" style="animation: fadeIn 1s ease-out 0.5s forwards; opacity: 0;">
+              Lavonne Ice Cream Kitchen
+            </span>
+            <h1 class="text-5xl md:text-7xl lg:text-9xl font-black tracking-tighter uppercase leading-[0.9] mb-6 drop-shadow-2xl">
+              Lick <br />
+              <!-- Updated gradient to Beige -> Teal to match screenshot -->
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FBE7C6] to-[#6B9B9E] bg-300% animate-gradient italic font-serif pr-2">Love</span> <br />
+              Live
+            </h1>
+            <p class="max-w-xl mx-auto text-lg md:text-xl font-light text-white/90 mb-10 leading-relaxed drop-shadow-md" style="animation: fadeIn 1s ease-out 0.8s forwards; opacity: 0;">
+              Where Memphis design meets experimental flavors. A culinary playground by Lavonne Academy.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center" style="animation: fadeIn 1s ease-out 1s forwards; opacity: 0;">
+              <a href="#flavors" class="px-8 py-4 bg-[#E88B8C] text-[#8B4049] font-bold uppercase tracking-wider hover:bg-[#FBE7C6] hover:text-[#8B4049] hover:scale-105 transition-all duration-300 rounded-full shadow-lg shadow-[#E88B8C]/30">
+                Explore Menu
+              </a>
+              <a href="#locations" class="px-8 py-4 border-2 border-white text-white font-bold uppercase tracking-wider hover:bg-white hover:text-[#8B4049] transition-all duration-300 rounded-full backdrop-blur-sm">
+                Visit Us
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-[#E88B8C]">
+          <i data-lucide="arrow-down" width="32" height="32"></i>
+        </div>
+      </section>
+
+      <!-- Experience Section -->
+      <section id="experience" class="py-24 relative overflow-hidden bg-pattern-tile">
+         <div class="absolute top-20 left-10 w-64 h-64 bg-[#E88B8C] rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-pulse"></div>
+         <div class="absolute bottom-20 right-10 w-64 h-64 bg-[#6B9B9E] rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-pulse" style="animation-delay: 1s;"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+          <div class="flex flex-col lg:flex-row gap-16 items-center">
+            
+            <!-- Gallery Grid with raw filenames -->
+            <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+               <div class="space-y-4 mt-8">
+                   <img src="Images/LICK, through the lens - all about sleek lines and soft serves! The space that is designed to te (1).jpg" alt="Interior" class="rounded-[2rem] border-4 border-white shadow-xl w-full h-64 object-cover hover:scale-105 transition-transform duration-500 animate-on-scroll slide-left delay-100" />
+                   <img src="Images/Screenshot_20260205_175212_Instagram.jpg" alt="Seating" class="rounded-[2rem] border-4 border-white shadow-xl w-full h-48 object-cover hover:scale-105 transition-transform duration-500 animate-on-scroll slide-left delay-300" />
+               </div>
+               <div class="space-y-4">
+                   <img src="Images/Screenshot_20260205_175336_Instagram.jpg" alt="Exterior" class="rounded-[2rem] border-4 border-white shadow-xl w-full h-48 object-cover hover:scale-105 transition-transform duration-500 animate-on-scroll slide-left delay-200" />
+                   <img src="Images/What’s got them waiting like this The Drool Bowl 😍Yup, you heard that right! We’ve got ice crea.jpg" alt="Drool Bowl" class="rounded-[2rem] border-4 border-white shadow-xl w-full h-64 object-cover hover:scale-105 transition-transform duration-500 animate-on-scroll slide-left delay-400" />
+               </div>
+            </div>
+
+            <!-- Text Content -->
+            <div class="lg:w-1/2 animate-on-scroll bg-white/60 backdrop-blur-sm p-8 rounded-[3rem] shadow-lg border border-white/40">
+              <h2 class="text-[#8B4049] text-sm font-bold tracking-[0.2em] uppercase mb-3">The Vibe</h2>
+              <h3 class="text-4xl md:text-5xl font-extrabold text-[#8B4049] leading-tight mb-8">
+                Retro-Modern<br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E88B8C] to-[#D17B4A]">Social Sanctuary</span>
+              </h3>
+              <p class="text-lg text-slate-700 mb-10 leading-relaxed font-medium">
+                  Vibrant coral arches, terracotta tiles, and playful track lighting. LICK is designed to be as photogenic as our flavors—inviting you to linger, connect, and snap the perfect shot.
+              </p>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                  <div class="flex gap-4 group animate-on-scroll delay-100">
+                      <div class="w-12 h-12 rounded-full bg-[#8B4049] flex items-center justify-center flex-shrink-0 text-white shadow-lg shadow-[#8B4049]/30 group-hover:scale-110 transition-transform duration-300">
+                          <i data-lucide="music" width="20"></i>
+                      </div>
+                      <div>
+                          <h4 class="font-bold text-lg text-[#8B4049]">Live DJ Sessions</h4>
+                          <p class="text-slate-600 text-sm">Curated beats in a high-energy setting.</p>
+                      </div>
+                  </div>
+
+                  <div class="flex gap-4 group animate-on-scroll delay-200">
+                      <div class="w-12 h-12 rounded-full bg-[#E88B8C] flex items-center justify-center flex-shrink-0 text-[#8B4049] shadow-lg shadow-[#E88B8C]/30 group-hover:scale-110 transition-transform duration-300">
+                          <i data-lucide="dog" width="20"></i>
+                      </div>
+                      <div>
+                          <h4 class="font-bold text-lg text-[#8B4049]">Pet Friendly</h4>
+                          <p class="text-slate-600 text-sm">"Drool Bowls" for your furry dates.</p>
+                      </div>
+                  </div>
+
+                  <div class="flex gap-4 group animate-on-scroll delay-300">
+                      <div class="w-12 h-12 rounded-full bg-[#D17B4A] flex items-center justify-center flex-shrink-0 text-white shadow-lg shadow-[#D17B4A]/30 group-hover:scale-110 transition-transform duration-300">
+                          <i data-lucide="sun" width="20"></i>
+                      </div>
+                      <div>
+                          <h4 class="font-bold text-lg text-[#8B4049]">Al Fresco Seating</h4>
+                          <p class="text-slate-600 text-sm">Breezy outdoor tiled benches.</p>
+                      </div>
+                  </div>
+
+                   <div class="flex gap-4 group animate-on-scroll delay-400">
+                      <div class="w-12 h-12 rounded-full bg-[#6B9B9E] flex items-center justify-center flex-shrink-0 text-white shadow-lg shadow-[#6B9B9E]/30 group-hover:scale-110 transition-transform duration-300">
+                          <i data-lucide="coffee" width="20"></i>
+                      </div>
+                      <div>
+                          <h4 class="font-bold text-lg text-[#8B4049]">Late Night</h4>
+                          <p class="text-slate-600 text-sm">Open until 12:30 AM everyday.</p>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Flavors Section -->
+      <section id="flavors" class="py-24 text-white relative overflow-hidden bg-pattern-sprinkles">
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-[#E88B8C] rounded-full filter blur-[120px] opacity-20 pointer-events-none animate-float"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#6B9B9E] rounded-full filter blur-[100px] opacity-20 pointer-events-none animate-float" style="animation-delay: 2s;"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+          <div class="text-center mb-16 animate-on-scroll">
+            <h2 class="text-[#FBE7C6] text-sm font-bold tracking-[0.2em] uppercase mb-3">Curated Menu</h2>
+            <h3 class="text-4xl md:text-5xl font-extrabold mb-8 drop-shadow-sm">
+              Flavor <span class="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#FBE7C6] to-[#E88B8C]">Innovations</span>
+            </h3>
+
+            <!-- Category Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+              <button onclick="filterFlavors('Experimental', this)" 
+                      class="flavor-tab flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold tracking-wider transition-all duration-300 border hover:bg-white/20 backdrop-blur-md bg-[#D17B4A] text-white border-[#D17B4A] tab-active"
+                      data-color="#D17B4A">
+                <i data-lucide="zap" width="16"></i> Experimental
+              </button>
+              
+              <button onclick="filterFlavors('Classic', this)" 
+                      class="flavor-tab flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold tracking-wider transition-all duration-300 border hover:bg-white/20 backdrop-blur-md bg-transparent text-white border-white/20"
+                      data-color="#E88B8C">
+                <i data-lucide="ice-cream" width="16"></i> Classics
+              </button>
+              
+              <button onclick="filterFlavors('Sundae', this)" 
+                      class="flavor-tab flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold tracking-wider transition-all duration-300 border hover:bg-white/20 backdrop-blur-md bg-transparent text-white border-white/20"
+                      data-color="#6B9B9E">
+                <i data-lucide="sparkles" width="16"></i> Sundaes & More
+              </button>
+            </div>
+          </div>
+
+          <!-- Menu Grid Container -->
+          <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Items injected via JS -->
+          </div>
+          
+          <div class="mt-16 text-center animate-on-scroll">
+              <p class="text-white/50 italic text-sm">
+                  * Menu items rotate seasonally to ensure peak freshness and creativity.
+              </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="py-24 bg-gradient-to-br from-[#FFF5F5] to-white overflow-hidden">
+        <div class="container mx-auto px-6">
+          <div class="flex flex-col lg:flex-row items-center gap-16">
+            
+            <!-- Text Content -->
+            <div class="lg:w-1/2 order-2 lg:order-1 animate-on-scroll slide-left">
+              <div class="mb-8">
+                <h2 class="text-[#8B4049] text-sm font-bold tracking-[0.2em] uppercase mb-3 flex items-center gap-2">
+                  <span class="w-8 h-[3px] bg-[#E88B8C] rounded-full"></span>
+                  The Origin Story
+                </h2>
+                <h3 class="text-4xl md:text-5xl font-extrabold text-[#8B4049] leading-tight mb-6">
+                  From the Masters of <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E88B8C] to-[#D17B4A] italic font-serif">Pastry Arts</span>
+                </h3>
+                <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+                  Born from the prestigious Lavonne Academy ecosystem, LICK isn't just an ice cream parlor—it's a culinary laboratory. 
+                  Founded by Chef Vinesh Johny and team, we bring the precision of French pastry arts to the joy of frozen desserts.
+                </p>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                  We believe in pushing boundaries. Whether it's blending savory feta with watermelon or reconstructing a classic sundae with architectural precision, every scoop tells a story of craftsmanship.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="flex flex-col items-start p-6 rounded-[1.5rem] border border-[#8B4049]/10 shadow-sm hover:shadow-md transition-shadow duration-300 animate-on-scroll zoom-in bg-white" style="transition-delay: 0ms;">
+                    <div class="p-3 rounded-full mb-4 shadow-sm" style="background-color: rgba(209, 123, 74, 0.3);">
+                        <i data-lucide="chef-hat" color="#8B4049" width="24"></i>
+                    </div>
+                    <h4 class="font-bold text-[#8B4049] mb-1">Chef Driven</h4>
+                    <p class="text-xs text-slate-600">Curated by industry leaders</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="flex flex-col items-start p-6 rounded-[1.5rem] border border-[#8B4049]/10 shadow-sm hover:shadow-md transition-shadow duration-300 animate-on-scroll zoom-in bg-white" style="transition-delay: 150ms;">
+                    <div class="p-3 rounded-full mb-4 shadow-sm" style="background-color: rgba(107, 155, 158, 0.3);">
+                        <i data-lucide="star" color="#8B4049" width="24"></i>
+                    </div>
+                    <h4 class="font-bold text-[#8B4049] mb-1">Premium</h4>
+                    <p class="text-xs text-slate-600">World-class ingredients</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="flex flex-col items-start p-6 rounded-[1.5rem] border border-[#8B4049]/10 shadow-sm hover:shadow-md transition-shadow duration-300 animate-on-scroll zoom-in bg-white" style="transition-delay: 300ms;">
+                    <div class="p-3 rounded-full mb-4 shadow-sm" style="background-color: rgba(232, 139, 140, 0.3);">
+                        <i data-lucide="award" color="#8B4049" width="24"></i>
+                    </div>
+                    <h4 class="font-bold text-[#8B4049] mb-1">Awarded</h4>
+                    <p class="text-xs text-slate-600">Best Confectionery Heritage</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Image Composition -->
+            <div class="lg:w-1/2 order-1 lg:order-2 relative animate-on-scroll slide-right">
+              <div class="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl border-[6px] border-white rotate-1 hover:rotate-0 transition-transform duration-700">
+                <img src="https://i.imgur.com/u7r3q3r.jpg" alt="Melting Popsicle Art" class="w-full h-auto object-cover hover:scale-110 transition-transform duration-700" />
+              </div>
+              <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-[#D17B4A] rounded-full z-0 opacity-40 blur-2xl animate-pulse"></div>
+              <div class="absolute -top-10 -right-10 w-60 h-60 bg-[#6B9B9E] rounded-full z-0 opacity-40 blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reels Section -->
+      <section id="social" class="py-12 md:py-20 bg-[#1A1A1A] relative overflow-hidden">
+         <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-[#E88B8C]/10 rounded-full blur-[100px] transform -translate-y-1/2 animate-pulse"></div>
+            <div class="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-[#6B9B9E]/10 rounded-full blur-[100px] transform -translate-y-1/2 animate-pulse" style="animation-delay: 2s;"></div>
+         </div>
+
+         <div class="container mx-auto px-0 md:px-4 relative z-10 animate-on-scroll">
+           <div class="text-center mb-8 md:mb-12">
+              <h2 class="text-[#E88B8C] text-sm font-bold tracking-[0.2em] uppercase mb-3">Community</h2>
+              <h3 class="text-3xl md:text-5xl font-extrabold text-white">Seen on <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E88B8C] via-[#FBE7C6] to-[#6B9B9E]">Social</span></h3>
+           </div>
+
+           <div class="flex flex-col items-center">
+               <div class="relative w-full max-w-[1400px] flex items-center md:justify-center">
+                   
+                   <!-- Previous Button -->
+                   <button onclick="prevSlide()" class="hidden md:block absolute left-10 z-30 p-3 rounded-full bg-black/40 hover:bg-[#E88B8C] text-white backdrop-blur-md transition-all border border-white/10 shadow-lg cursor-pointer">
+                       <i data-lucide="chevron-left" width="24"></i>
+                   </button>
+
+                   <!-- Slides Container -->
+                   <div class="flex items-center justify-start md:justify-center gap-4 md:gap-12 w-full py-4 pl-[5vw] md:pl-0 overflow-x-visible md:overflow-hidden">
+                       
+                       <!-- PREV -->
+                       <div class="hidden md:block w-[300px] h-[540px] flex-shrink-0 opacity-40 scale-90 transition-all duration-500 ease-out origin-right blur-[1px]">
+                           <div class="w-full h-full rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#111]">
+                               <video id="reel-prev" src="" class="w-full h-full object-cover opacity-50" muted playsinline loop></video>
+                           </div>
+                       </div>
+
+                       <!-- ACTIVE -->
+                       <div class="w-[85vw] h-[75vh] md:w-[340px] md:h-[600px] lg:w-[380px] lg:h-[680px] flex-shrink-0 z-20 transition-all duration-500 ease-out shadow-[0_10px_40px_rgba(0,0,0,0.6)] snap-center">
+                           <div class="w-full h-full rounded-[2.5rem] p-[3px] bg-gradient-to-b from-[#E88B8C] via-[#D17B4A] to-[#6B9B9E]">
+                                <div class="w-full h-full rounded-[2.3rem] overflow-hidden bg-black relative">
+                                   <div class="w-full h-full transform scale-[1.2] origin-center">
+                                     <video id="reel-active" src="" class="w-full h-full object-cover" autoplay muted playsinline loop></video>
+                                   </div>
+                                   <div class="absolute inset-0 pointer-events-none rounded-[2.3rem] shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] border border-white/10"></div>
+                                </div>
+                           </div>
+                       </div>
+
+                       <!-- NEXT -->
+                       <div class="w-[85vw] h-[75vh] md:w-[300px] md:h-[540px] flex-shrink-0 opacity-50 scale-95 md:scale-90 transition-all duration-500 ease-out origin-left">
+                           <div class="w-full h-full rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#111]">
+                               <div class="w-full h-full transform scale-[1.2] origin-center">
+                                   <video id="reel-next" src="" class="w-full h-full object-cover opacity-50" muted playsinline loop></video>
+                               </div>
+                               <div class="absolute inset-0 bg-black/40 pointer-events-none"></div>
+                           </div>
+                       </div>
+
+                   </div>
+
+                   <!-- Next Button -->
+                   <button onclick="nextSlide()" class="hidden md:block absolute right-10 z-30 p-3 rounded-full bg-black/40 hover:bg-[#E88B8C] text-white backdrop-blur-md transition-all border border-white/10 shadow-lg cursor-pointer">
+                       <i data-lucide="chevron-right" width="24"></i>
+                   </button>
+               </div>
+           </div>
+         </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="locations" class="bg-[#1A1A1A] text-white pt-24 pb-10">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+          <div class="lg:col-span-1">
+            <h2 class="text-4xl font-black tracking-tighter uppercase mb-6 leading-none">LICK</h2>
+            <p class="text-white/50 mb-6">Lavonne Ice Cream Kitchen.<br />Indulgence Redefined.</p>
+            <div class="flex space-x-4">
+              <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#E88B8C] hover:text-[#8B4049] transition-all">
+                <i data-lucide="instagram" width="20"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-1">
+            <h4 class="font-bold text-lg mb-6 text-[#E88B8C] uppercase tracking-wider">Indiranagar</h4>
+            <ul class="space-y-4 text-white/70">
+              <li class="flex gap-3"><i data-lucide="map-pin" width="18" class="mt-1"></i> <span class="text-sm">12th Main Rd, HAL 2nd Stage, Indiranagar</span></li>
+              <li class="flex gap-3"><i data-lucide="clock" width="18" class="mt-1"></i> <span class="text-sm">12:30 PM - 12:30 AM</span></li>
+            </ul>
+            <a href="#" class="inline-block mt-4 text-xs font-bold border-b border-[#E88B8C] pb-1 hover:text-[#E88B8C] transition-colors">GET DIRECTIONS</a>
+          </div>
+
+          <div class="lg:col-span-1">
+            <h4 class="font-bold text-lg mb-6 text-[#E88B8C] uppercase tracking-wider">Bellandur</h4>
+            <ul class="space-y-4 text-white/70">
+              <li class="flex gap-3"><i data-lucide="map-pin" width="18" class="mt-1"></i> <span class="text-sm">Site No. 12, Green Glen Layout, Bellandur</span></li>
+              <li class="flex gap-3"><i data-lucide="clock" width="18" class="mt-1"></i> <span class="text-sm">12:30 PM - 12:30 AM</span></li>
+            </ul>
+            <a href="#" class="inline-block mt-4 text-xs font-bold border-b border-[#E88B8C] pb-1 hover:text-[#E88B8C] transition-colors">GET DIRECTIONS</a>
+          </div>
+
+          <div class="lg:col-span-1">
+             <h4 class="font-bold text-lg mb-6 text-[#E88B8C] uppercase tracking-wider">Contact</h4>
+             <ul class="space-y-4 text-white/70">
+                <li class="flex gap-3"><i data-lucide="phone" width="18" class="mt-1"></i> <span class="text-sm">+91 97409 54507</span></li>
+                <li class="text-sm mt-4">For franchise enquiries, please contact us via email.</li>
+             </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-white/30">
+          <p>&copy; 2024 Lavonne Ice Cream Kitchen. All rights reserved.</p>
+          <div class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- LOGIC -->
+    <script>
+      // 1. DATA
+      const MENU_ITEMS = [
+        { name: 'Watermelon Feta', description: 'A daring balance of sweet summer melon and savory feta cheese.', category: 'Experimental', isSignature: true },
+        { name: 'Avocado Toast', description: 'Creamy avocado base with a hint of toast crunch. Breakfast reimagined.', category: 'Experimental' },
+        { name: 'Carrot Milk', description: 'Earthy sweetness of carrots blended with rich dairy.', category: 'Experimental' },
+        { name: 'Crunchy Pistachio', description: 'Roasted pistachios folded into a silky smooth base.', category: 'Classic' },
+        { name: 'Salted Caramel', description: 'The perfect marriage of burnt sugar sweetness and sea salt.', category: 'Classic' },
+        { name: 'Chocolate Resurrection', description: 'A decadent sundae for the true cocoa connoisseur.', category: 'Sundae', isSignature: true },
+        { name: 'Drool Bowls', description: 'Specially crafted, safe, and delicious treats for your pets.', category: 'Pet-Friendly' },
+      ];
+
+      // Video files for carousel
+      const VIDEO_FILES = [
+        'Videos/And THIS is how we karaoke at LICK 🎶🎵Voices, vibes & a whole lot of GELATO. Our Independence D.mp4',
+        'Videos/Ordinary days look better here.mp4',
+        'Videos/Triple Chocolate Century Ice Cream with Karun Nair, devoured by 303 kids thisChildren’s Day ♥️.mp4'
+      ];
+
+      // 2. INITIALIZATION
+      document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+        renderMenu('Experimental');
+        updateReels();
+        startReelAutoplay();
+        initObserver();
+      });
+
+      // 3. NAVBAR LOGIC
+      const navbar = document.getElementById('navbar');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('menu-icon');
+      const closeIcon = document.getElementById('close-icon');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('bg-[#8B4049]/95', 'backdrop-blur-md', 'shadow-lg', 'border-b-[3px]');
+          navbar.classList.remove('bg-transparent');
+          navbar.style.borderImage = 'linear-gradient(to right, #E88B8C, #6B9B9E, #D17B4A) 1';
+        } else {
+          navbar.classList.remove('bg-[#8B4049]/95', 'backdrop-blur-md', 'shadow-lg', 'border-b-[3px]');
+          navbar.classList.add('bg-transparent');
+          navbar.style.borderImage = 'none';
+        }
+      });
+
+      document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenu.classList.toggle('flex');
+        menuIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+
+      document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+           mobileMenu.classList.add('hidden');
+           mobileMenu.classList.remove('flex');
+           menuIcon.classList.remove('hidden');
+           closeIcon.classList.add('hidden');
+        });
+      });
+
+      // 4. HERO PARALLAX
+      const heroBg = document.getElementById('hero-bg');
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        heroBg.style.transform = `translateY(${scrollY * 0.5}px) scale(1.1)`;
+      });
+
+      // 5. FLAVOR FILTER
+      function renderMenu(category) {
+        const grid = document.getElementById('menu-grid');
+        grid.innerHTML = '';
+        
+        let filtered = MENU_ITEMS.filter(item => {
+           if(category === 'Experimental') return item.category === 'Experimental';
+           if(category === 'Classic') return item.category === 'Classic';
+           return item.category === 'Sundae' || item.category === 'Pet-Friendly';
+        });
+
+        filtered.forEach((item, index) => {
+           const div = document.createElement('div');
+           div.className = `group bg-[#1A1A1A]/40 backdrop-blur-md border border-white/10 p-8 rounded-[2rem] transition-all duration-300 hover:-translate-y-2 relative overflow-hidden hover:bg-[#1A1A1A]/60 hover:shadow-[0_0_30px_rgba(232,139,140,0.3)] hover:border-[#E88B8C]/40 animate-on-scroll zoom-in`;
+           div.style.transitionDelay = `${index * 100}ms`;
+           
+           // Signature Badge
+           if(item.isSignature) {
+             div.innerHTML += `
+               <div class="absolute top-0 right-0 bg-gradient-to-bl from-[#E88B8C] to-[#8B4049] text-white text-[10px] font-bold px-4 py-2 uppercase tracking-wider rounded-bl-2xl shadow-md">
+                  Signature
+               </div>`;
+           }
+
+           // Icon/Graphic
+           let iconHtml = '';
+           if(item.category === 'Pet-Friendly') {
+             iconHtml = `<span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#B4F8C8]/20 text-[#B4F8C8] mb-4 text-2xl">🐾</span>`;
+           } else {
+             iconHtml = `<div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E88B8C] to-[#D17B4A] opacity-80 group-hover:scale-125 transition-transform duration-500 mb-6"></div>`;
+           }
+
+           div.innerHTML += `
+             ${iconHtml}
+             <h4 class="text-2xl font-bold mb-3 group-hover:text-[#FBE7C6] transition-colors text-white">${item.name}</h4>
+             <p class="text-white/80 leading-relaxed font-light">${item.description}</p>
+           `;
+           grid.appendChild(div);
+        });
+
+        // Retrigger observer for new elements
+        initObserver();
+      }
+
+      function filterFlavors(category, btn) {
+        document.querySelectorAll('.flavor-tab').forEach(b => {
+           b.style.backgroundColor = 'transparent';
+           b.style.color = 'white';
+           b.style.borderColor = 'rgba(255,255,255,0.2)';
+           b.classList.remove('tab-active');
+        });
+        
+        btn.style.backgroundColor = btn.getAttribute('data-color');
+        btn.style.borderColor = btn.getAttribute('data-color');
+        btn.style.color = category === 'Experimental' ? 'white' : '#8B4049';
+        btn.classList.add('tab-active');
+
+        renderMenu(category);
+      }
+
+      // 6. VIDEO CAROUSEL
+      let activeReelIndex = 0;
+      let autoplayInterval;
+
+      function getVideoSrc(offset) {
+        return VIDEO_FILES[(activeReelIndex + offset + VIDEO_FILES.length) % VIDEO_FILES.length];
+      }
+
+      function updateReels() {
+        const prevVideo = document.getElementById('reel-prev');
+        const activeVideo = document.getElementById('reel-active');
+        const nextVideo = document.getElementById('reel-next');
+
+        if (prevVideo && activeVideo && nextVideo) {
+          // Update sources
+          prevVideo.src = getVideoSrc(-1);
+          activeVideo.src = getVideoSrc(0);
+          nextVideo.src = getVideoSrc(1);
+          
+          // Autoplay active video (ensure it's muted to allow autoplay)
+          activeVideo.play().catch(e => console.log("Autoplay blocked:", e));
+          
+          // Pause side videos to save resources
+          prevVideo.pause();
+          nextVideo.pause();
+        }
+      }
+
+      function nextSlide() {
+        activeReelIndex = (activeReelIndex + 1) % VIDEO_FILES.length;
+        updateReels();
+        resetAutoplay();
+      }
+
+      function prevSlide() {
+        activeReelIndex = (activeReelIndex - 1 + VIDEO_FILES.length) % VIDEO_FILES.length;
+        updateReels();
+        resetAutoplay();
+      }
+
+      function startReelAutoplay() {
+        // Reduced interval for local video loop feeling
+        autoplayInterval = setInterval(nextSlide, 8000); 
+      }
+
+      function resetAutoplay() {
+        clearInterval(autoplayInterval);
+        startReelAutoplay();
+      }
+
+      // 7. INTERSECTION OBSERVER
+      function initObserver() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+      }
+    </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
